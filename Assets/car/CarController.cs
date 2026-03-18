@@ -44,6 +44,7 @@ public class CarController : MonoBehaviour
         ApplyMotor();
         ApplySteering();
         ApplyBrake();
+        CheckParticles();
         ApplyWheelPositions();
     }
 
@@ -120,6 +121,49 @@ public class CarController : MonoBehaviour
         UpdateWheels(colliders.FLWheel, wheelMeshes.FLWheel);
         UpdateWheels(colliders.RRWheel, wheelMeshes.RRWheel);
         UpdateWheels(colliders.RLWheel, wheelMeshes.RLWheel);
+    }
+    void CheckParticles()
+    {
+        WheelHit[] wheelHits = new WheelHit[4];
+        colliders.FRWheel.GetGroundHit(out wheelHits[0]);
+        colliders.FLWheel.GetGroundHit(out wheelHits[1]);
+
+        colliders.RRWheel.GetGroundHit(out wheelHits[2]);
+        colliders.RLWheel.GetGroundHit(out wheelHits[3]);
+
+        float slipAllowance = 0.5f;
+        if ((Mathf.Abs(wheelHits[0].sidewaysSlip) + Mathf.Abs(wheelHits[0].forwardSlip) > slipAllowance))
+        {
+            wheelParticles.FRWheel.Play();
+        }
+        else
+        {
+            wheelParticles.FRWheel.Stop();
+        }
+        if ((Mathf.Abs(wheelHits[1].sidewaysSlip) + Mathf.Abs(wheelHits[1].forwardSlip) > slipAllowance))
+        {
+            wheelParticles.FLWheel.Play();
+        }
+        else
+        {
+            wheelParticles.FLWheel.Stop();
+        }
+        if ((Mathf.Abs(wheelHits[2].sidewaysSlip) + Mathf.Abs(wheelHits[2].forwardSlip) > slipAllowance))
+        {
+            wheelParticles.RRWheel.Play();
+        }
+        else
+        {
+            wheelParticles.RRWheel.Stop();
+        }
+        if ((Mathf.Abs(wheelHits[3].sidewaysSlip) + Mathf.Abs(wheelHits[3].forwardSlip) > slipAllowance))
+        {
+            wheelParticles.RLWheel.Play();
+        }
+        else
+        {
+            wheelParticles.RLWheel.Stop();
+        }
     }
     void UpdateWheels(WheelCollider coll, MeshRenderer wheelMesh)
     {
