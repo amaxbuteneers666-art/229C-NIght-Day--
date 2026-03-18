@@ -910,9 +910,15 @@ MonoBehaviour:
     FLWheel: {fileID: 1766677614}
     RRWheel: {fileID: 1766677613}
     RLWheel: {fileID: 1766677612}
+  wheelParticles:
+    FRWheel: {fileID: 0}
+    FLWheel: {fileID: 0}
+    RRWheel: {fileID: 0}
+    RLWheel: {fileID: 0}
   gasInput: 0
   brakeInput: 0
   steeringInput: 0
+  smokePrefab: {fileID: 336881577860626725, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3, type: 3}
   motorPower: 500
   brakePower: 0
   slipAngle: 0
