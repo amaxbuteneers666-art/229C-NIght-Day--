@@ -1,4 +1,7 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
 
 public class CarController : MonoBehaviour
 {
@@ -13,7 +16,22 @@ public class CarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        ApplyWheelPositions();
+    }
+    void ApplyWheelPositions()
+    {
+        UpdateWheels(colliders.FRWheel, wheelMeshes.FRWheel);
+        UpdateWheels(colliders.FLWheel, wheelMeshes.FLWheel);
+        UpdateWheels(colliders.RRWheel, wheelMeshes.RRWheel);
+        UpdateWheels(colliders.RLWheel, wheelMeshes.RLWheel);
+    }
+    void UpdateWheels(WheelCollider coll, MeshRenderer wheelMesh)
+    {
+        Quaternion quat;
+        Vector3 postition;
+        coll.GetWorldPose(out postition, out quat);
+        wheelMesh.transform.position = postition;
+        wheelMesh.transform.rotation = quat;
     }
 }
 [System.Serializable]
