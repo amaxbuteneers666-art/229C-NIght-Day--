@@ -383,6 +383,11 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!23 &432146577 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3257348344918956824, guid: 17809513e7df71e43aa073d6856e88ec, type: 3}
+  m_PrefabInstance: {fileID: 531776924}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &531776924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -455,14 +460,14 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 17809513e7df71e43aa073d6856e88ec, type: 3}
-      insertIndex: 2
+      insertIndex: -1
       addedObject: {fileID: 1054553091}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 17809513e7df71e43aa073d6856e88ec, type: 3}
-      insertIndex: 4
-      addedObject: {fileID: 1790902483}
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 17809513e7df71e43aa073d6856e88ec, type: 3}
-      insertIndex: 6
+      insertIndex: -1
       addedObject: {fileID: 1428239015}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 17809513e7df71e43aa073d6856e88ec, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1790902483}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 17809513e7df71e43aa073d6856e88ec, type: 3}
       insertIndex: -1
       addedObject: {fileID: 639070479}
@@ -547,6 +552,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2a320e8b87d0848b9bf60a16c7cf29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  colliders:
+    FRWheel: {fileID: 1428239016}
+    FLWheel: {fileID: 1054553092}
+    RRWheel: {fileID: 639070480}
+    RLWheel: {fileID: 1790902484}
+  wheelMeshes:
+    FRWheel: {fileID: 1306720448}
+    FLWheel: {fileID: 1771912043}
+    RRWheel: {fileID: 1769643575}
+    RLWheel: {fileID: 432146577}
 --- !u!1 &639070478
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,6 +753,11 @@ WheelCollider:
   m_LayerOverridePriority: 0
   m_Enabled: 1
   m_ProvidesContacts: 0
+--- !u!23 &1306720448 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1710200702970202599, guid: 17809513e7df71e43aa073d6856e88ec, type: 3}
+  m_PrefabInstance: {fileID: 531776924}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1428239014
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,6 +829,16 @@ WheelCollider:
   m_LayerOverridePriority: 0
   m_Enabled: 1
   m_ProvidesContacts: 0
+--- !u!23 &1769643575 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3256114916410871993, guid: 17809513e7df71e43aa073d6856e88ec, type: 3}
+  m_PrefabInstance: {fileID: 531776924}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1771912043 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6308473130935161974, guid: 17809513e7df71e43aa073d6856e88ec, type: 3}
+  m_PrefabInstance: {fileID: 531776924}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1790902482
 GameObject:
   m_ObjectHideFlags: 0
