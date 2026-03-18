@@ -69,9 +69,9 @@ public class CarController : MonoBehaviour
             steeringInput -= leftButton.dampenPress;
         }*/
 
-        slipAngle = Vector3.Angle(transform.forward, playerRB.velocity - transform.forward);
+        slipAngle = Vector3.Angle(transform.forward, playerRB.linearVelocity - transform.forward);
 
-        float movingDirection = Vector3.Dot(transform.forward, playerRB.velocity);
+        float movingDirection = Vector3.Dot(transform.forward, playerRB.linearVelocity);
         if (movingDirection < -0.5f && gasInput > 0)
         {
             brakeInput = Mathf.Abs(gasInput);
@@ -108,7 +108,7 @@ public class CarController : MonoBehaviour
         float steeringAngle = steeringInput * steeringCurve.Evaluate(speed);
         if (slipAngle < 120f)
         {
-            steeringAngle += Vector3.SignedAngle(transform.forward, playerRB.velocity + transform.forward, Vector3.up);
+            steeringAngle += Vector3.SignedAngle(transform.forward, playerRB.linearVelocity + transform.forward, Vector3.up);
         }
         steeringAngle = Mathf.Clamp(steeringAngle, -90f, 90f);
         colliders.FRWheel.steerAngle = steeringAngle;
