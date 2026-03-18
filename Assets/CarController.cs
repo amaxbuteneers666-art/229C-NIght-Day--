@@ -9,9 +9,12 @@ public class CarController : MonoBehaviour
     public WheelColliders colliders;
     public WheelMeshes wheelMeshes;
     public float gasInput;
+    public float brakeInput;
     public float steeringInput;
 
     public float motorPower;
+    public float brakePower;
+    public float slipAngle;
     private float speed;
     public AnimationCurve steeringCurve;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -27,6 +30,7 @@ public class CarController : MonoBehaviour
         CheckInput();
         ApplyMotor();
         ApplySteering();
+        ApplyBrake();
         ApplyWheelPositions();
     }
 
@@ -49,10 +53,10 @@ public class CarController : MonoBehaviour
         if (leftButton.isPressed)
         {
             steeringInput -= leftButton.dampenPress;
-        }
+        }*/
+
         slipAngle = Vector3.Angle(transform.forward, playerRB.velocity - transform.forward);
 
-        //fixed code to brake even after going on reverse by Andrew Alex 
         float movingDirection = Vector3.Dot(transform.forward, playerRB.velocity);
         if (movingDirection < -0.5f && gasInput > 0)
         {
@@ -65,7 +69,17 @@ public class CarController : MonoBehaviour
         else
         {
             brakeInput = 0;
-        }*/
+        }
+    }
+    void ApplyBrake()
+    {
+        colliders.FRWheel.brakeTorque = brakeInput * brakePower * 0.7f;
+        colliders.FLWheel.brakeTorque = brakeInput * brakePower * 0.7f;
+
+        colliders.RRWheel.brakeTorque = brakeInput * brakePower * 0.3f;
+        colliders.RLWheel.brakeTorque = brakeInput * brakePower * 0.3f;
+
+
     }
     void ApplyMotor()
     {
@@ -78,11 +92,11 @@ public class CarController : MonoBehaviour
     {
 
         float steeringAngle = steeringInput * steeringCurve.Evaluate(speed);
-        /*if (slipAngle < 120f)
+        if (slipAngle < 120f)
         {
             steeringAngle += Vector3.SignedAngle(transform.forward, playerRB.velocity + transform.forward, Vector3.up);
         }
-        steeringAngle = Mathf.Clamp(steeringAngle, -90f, 90f);*/
+        steeringAngle = Mathf.Clamp(steeringAngle, -90f, 90f);
         colliders.FRWheel.steerAngle = steeringAngle;
         colliders.FLWheel.steerAngle = steeringAngle;
     }
@@ -118,4 +132,12 @@ public class WheelMeshes
     public MeshRenderer FLWheel;
     public MeshRenderer RRWheel;
     public MeshRenderer RLWheel;
+}
+[System.Serializable]
+public class WheelParticles
+{
+    public ParticleSystem FRWheel;
+    public ParticleSystem FLWheel;
+    public ParticleSystem RRWheel;
+    public ParticleSystem RLWheel;
 }
