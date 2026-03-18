@@ -26,6 +26,7 @@ public class CarController : MonoBehaviour
         speed = playerRB.linearVelocity.magnitude;
         CheckInput();
         ApplyMotor();
+        ApplySteering();
         ApplyWheelPositions();
     }
 
@@ -73,6 +74,19 @@ public class CarController : MonoBehaviour
         colliders.RLWheel.motorTorque = motorPower * gasInput;
 
     }
+    void ApplySteering()
+    {
+
+        float steeringAngle = steeringInput * steeringCurve.Evaluate(speed);
+        /*if (slipAngle < 120f)
+        {
+            steeringAngle += Vector3.SignedAngle(transform.forward, playerRB.velocity + transform.forward, Vector3.up);
+        }
+        steeringAngle = Mathf.Clamp(steeringAngle, -90f, 90f);*/
+        colliders.FRWheel.steerAngle = steeringAngle;
+        colliders.FLWheel.steerAngle = steeringAngle;
+    }
+
     void ApplyWheelPositions()
     {
         UpdateWheels(colliders.FRWheel, wheelMeshes.FRWheel);

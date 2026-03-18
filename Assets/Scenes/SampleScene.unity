@@ -913,6 +913,30 @@ MonoBehaviour:
   gasInput: 0
   steeringInput: 0
   motorPower: 500
+  steeringCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -39.44828
+      value: 60.036842
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 10.557621
+      value: 15.011347
+      inSlope: -0.010516103
+      outSlope: -0.010516103
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.4323795
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2133829132
 GameObject:
   m_ObjectHideFlags: 0
