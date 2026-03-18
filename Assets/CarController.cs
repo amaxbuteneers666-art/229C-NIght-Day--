@@ -5,20 +5,27 @@ using System.Collections.Generic;
 
 public class CarController : MonoBehaviour
 {
+    private Rigidbody playerRB;
     public WheelColliders colliders;
     public WheelMeshes wheelMeshes;
     public float gasInput;
     public float steeringInput;
+
+    public float motorPower;
+    private float speed;
+    public AnimationCurve steeringCurve;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        playerRB = gameObject.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        speed = playerRB.linearVelocity.magnitude;
         CheckInput();
+        ApplyMotor();
         ApplyWheelPositions();
     }
 
@@ -58,6 +65,13 @@ public class CarController : MonoBehaviour
         {
             brakeInput = 0;
         }*/
+    }
+    void ApplyMotor()
+    {
+
+        colliders.RRWheel.motorTorque = motorPower * gasInput;
+        colliders.RLWheel.motorTorque = motorPower * gasInput;
+
     }
     void ApplyWheelPositions()
     {

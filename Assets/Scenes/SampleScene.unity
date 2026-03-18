@@ -910,6 +910,9 @@ MonoBehaviour:
     FLWheel: {fileID: 1766677614}
     RRWheel: {fileID: 1766677613}
     RLWheel: {fileID: 1766677612}
+  gasInput: 0
+  steeringInput: 0
+  motorPower: 500
 --- !u!1 &2133829132
 GameObject:
   m_ObjectHideFlags: 0
