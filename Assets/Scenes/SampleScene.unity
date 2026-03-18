@@ -806,6 +806,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0c21873898263984aa46098b78a27f21, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1766677610}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0c21873898263984aa46098b78a27f21, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1766677616}
   m_SourcePrefab: {fileID: 100100000, guid: 0c21873898263984aa46098b78a27f21, type: 3}
 --- !u!4 &1766677608 stripped
 Transform:
@@ -836,8 +839,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.8355206, z: 3.9878023}
-  m_Center: {x: 0, y: 0.74062985, z: 0.03195393}
+  m_Size: {x: 1.2971839, y: 0.8355206, z: 3.9878023}
+  m_Center: {x: 0.038197577, y: 0.74062985, z: 0.03195393}
 --- !u!54 &1766677611
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -846,7 +849,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1766677609}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 1000
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -865,6 +868,48 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!23 &1766677612 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3257348344918956824, guid: 0c21873898263984aa46098b78a27f21, type: 3}
+  m_PrefabInstance: {fileID: 1766677607}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1766677613 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3256114916410871993, guid: 0c21873898263984aa46098b78a27f21, type: 3}
+  m_PrefabInstance: {fileID: 1766677607}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1766677614 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6308473130935161974, guid: 0c21873898263984aa46098b78a27f21, type: 3}
+  m_PrefabInstance: {fileID: 1766677607}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1766677615 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1710200702970202599, guid: 0c21873898263984aa46098b78a27f21, type: 3}
+  m_PrefabInstance: {fileID: 1766677607}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1766677616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766677609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2a320e8b87d0848b9bf60a16c7cf29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarController
+  colliders:
+    FRWheel: {fileID: 1643738864}
+    FLWheel: {fileID: 1302080472}
+    RRWheel: {fileID: 368358489}
+    RLWheel: {fileID: 1320282117}
+  wheelMeshes:
+    FRWheel: {fileID: 1766677615}
+    FLWheel: {fileID: 1766677614}
+    RRWheel: {fileID: 1766677613}
+    RLWheel: {fileID: 1766677612}
 --- !u!1 &2133829132
 GameObject:
   m_ObjectHideFlags: 0
