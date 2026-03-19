@@ -51,23 +51,8 @@ public class CarController : MonoBehaviour
     void CheckInput()
     {
         gasInput = Input.GetAxis("Vertical");
-        /*if (gasPedal.isPressed)
-        {
-            gasInput += gasPedal.dampenPress;
-        }
-        if (brakePedal.isPressed)
-        {
-            gasInput -= brakePedal.dampenPress;
-        }*/
         steeringInput = Input.GetAxis("Horizontal");
-        /*if (rightButton.isPressed)
-        {
-            steeringInput += rightButton.dampenPress;
-        }
-        if (leftButton.isPressed)
-        {
-            steeringInput -= leftButton.dampenPress;
-        }*/
+       
 
         slipAngle = Vector3.Angle(transform.forward, playerRB.linearVelocity - transform.forward);
 
