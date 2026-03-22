@@ -734,8 +734,8 @@ MonoBehaviour:
   startingSound: {fileID: 1777668913}
   idleMaxVolume: 1
   runningMaxVolume: 1
-  runningMaxPitch: 1
-  reverseMaxVolume: 0.8
+  runningMaxPitch: 2
+  reverseMaxVolume: 0.35
   reverseMaxPitch: 1
   limiterEngage: 0.8
   limiterStrength: 0.1

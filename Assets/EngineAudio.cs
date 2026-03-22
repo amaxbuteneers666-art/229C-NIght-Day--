@@ -24,12 +24,14 @@ public class EngineAudio : MonoBehaviour
     private float revLimiter;
 
     private CarController carController;
+    private Rigidbody rb;
 
     public bool isEngineRunning = false;
 
     void Start()
     {
         carController = GetComponent<CarController>();
+        rb = GetComponent<Rigidbody>();
 
         idleSound.volume = 0;
         runningSound.volume = 0;
@@ -44,16 +46,15 @@ public class EngineAudio : MonoBehaviour
     {
         if (!carController) return;
 
-        float speed = carController.GetSpeedRatio();
-        float speedSign = Mathf.Sign(carController.gasInput);
-
-        speedRatio = Mathf.Abs(speed);
+        speedRatio = Mathf.Abs(carController.GetSpeedRatio());
 
         UpdateLimiter();
 
+        float speedDirection = GetMovementDirection();
+
         if (isEngineRunning)
         {
-            UpdateEngineSounds(speedSign);
+            UpdateEngineSounds(speedDirection);
         }
         else
         {
@@ -61,6 +62,16 @@ public class EngineAudio : MonoBehaviour
             runningSound.volume = 0;
             reverseSound.volume = 0;
         }
+    }
+
+    float GetMovementDirection()
+    {
+        float direction = Vector3.Dot(transform.forward, rb.velocity);
+
+        if (direction > 1f) return 1f;
+        if (direction < -1f) return -1f;
+
+        return 0f;
     }
 
     void UpdateLimiter()
