@@ -17,7 +17,11 @@ public class CarController : MonoBehaviour
     public float brakePower;
     public float slipAngle;
     private float speed;
+    private float speedClamped;
+    public float maxSpeed;
     public AnimationCurve steeringCurve;
+    public int isEngineRunning;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -39,7 +43,8 @@ public class CarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        speed = playerRB.linearVelocity.magnitude;
+        speed = colliders.RRWheel.rpm * colliders.RRWheel.radius * 2f * Mathf.PI / 10f;
+        speedClamped = Mathf.Lerp(speedClamped, speed, Time.deltaTime);
         CheckInput();
         ApplyMotor();
         ApplySteering();
@@ -51,12 +56,15 @@ public class CarController : MonoBehaviour
     void CheckInput()
     {
         gasInput = Input.GetAxis("Vertical");
+        if (Mathf.Abs(gasInput) > 0 && isEngineRunning == 0)
+        {
+            StartCoroutine(GetComponent<EngineAudio>().StartEngine());
+        }
         steeringInput = Input.GetAxis("Horizontal");
-       
+        slipAngle = Vector3.Angle(transform.forward, playerRB.velocity - transform.forward);
 
-        slipAngle = Vector3.Angle(transform.forward, playerRB.linearVelocity - transform.forward);
-
-        float movingDirection = Vector3.Dot(transform.forward, playerRB.linearVelocity);
+        //fixed code to brake even after going on reverse by Andrew Alex 
+        float movingDirection = Vector3.Dot(transform.forward, playerRB.velocity);
         if (movingDirection < -0.5f && gasInput > 0)
         {
             brakeInput = Mathf.Abs(gasInput);
@@ -157,6 +165,11 @@ public class CarController : MonoBehaviour
         coll.GetWorldPose(out postition, out quat);
         wheelMesh.transform.position = postition;
         wheelMesh.transform.rotation = quat;
+    }
+    public float GetSpeedRatio()
+    {
+        var gas = Mathf.Clamp(Mathf.Abs(gasInput), 0.5f, 1f);
+        return speedClamped * gas / maxSpeed;
     }
 }
 [System.Serializable]
