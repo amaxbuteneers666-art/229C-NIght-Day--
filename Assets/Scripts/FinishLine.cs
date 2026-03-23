@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Checkpoint : MonoBehaviour
+public class FinishLine : MonoBehaviour
 {
     public float respawnTime = 30f;
 
@@ -18,7 +18,7 @@ public class Checkpoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            RaceManager.Instance.PassCheckpoint();
+            RaceManager.Instance.CrossFinishLine();
 
             StartCoroutine(Respawn());
         }
@@ -26,13 +26,11 @@ public class Checkpoint : MonoBehaviour
 
     IEnumerator Respawn()
     {
-        // ซ่อน
         col.enabled = false;
         mesh.enabled = false;
 
         yield return new WaitForSeconds(respawnTime);
 
-        // กลับมา
         col.enabled = true;
         mesh.enabled = true;
     }

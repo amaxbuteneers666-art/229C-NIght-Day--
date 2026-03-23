@@ -1,151 +1,116 @@
-
-using System.Collections;
 using UnityEngine;
 using TMPro;
 
 public class RaceManager : MonoBehaviour
 {
+
     public static RaceManager Instance;
-    [Header("Ui References")]
-    [SerializeField] private TextMeshProUGUI currentLapTimeText;
+
+    [Header("Result UI")]
+    public GameObject resultPanel;      // ลาก ResultPanel มาใส่ที่นี่
+    public TextMeshProUGUI finalTimeText; // ลาก Text ที่จะโชว์เวลาสรุปมาใส่ที่นี่
     
-    [SerializeField] private TextMeshProUGUI bestLaptimeText;
-    [SerializeField] private TextMeshProUGUI overallRaceTimeText;
-    [SerializeField] private TextMeshProUGUI LapText;
+    
+    
+    [Header("Lap Settings")]
+    public int totalLaps = 3;
+    private int currentLap = 0;
 
-    [Header("Race Settings")]
-    [SerializeField] private Checkpoint[] checkpoints;
-    [SerializeField] private int lastCheckpointIndex = -1;
-    [SerializeField] private bool isCircuit = false;
-    [SerializeField] private int totalLaps = 1 ;
- 
-    private int currentLap = 1;
+    [Header("Checkpoint")]
+    public int totalCheckpoints = 0;
+    private int passedCheckpoints = 0;
 
-    private bool raceStarted = false;
-    private bool raceFinished = false;
-
-    [Header("Lap Timer")]
+    [Header("Time")]
     private float currentLapTime = 0f;
-    private float overallRaceTime = 0f;
-    private float bestLapTime = Mathf.Infinity;
-    
-    #region  Unity Functions
 
+    [Header("UI")]
+    public TextMeshProUGUI lapText;
+    public TextMeshProUGUI lapTimeText;
+
+
+    
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }       
+        Instance = this;
     }
+
     private void Update()
     {
-        if(raceStarted)
-        {
-            UpdateTimers();
-        }
-        UpdaerUI();
-    }
-
-    #endregion
-
-    #region Checkpoint Managament
-
-    public void CheckpointReached(int checkpointTndex)
-    {
-        if((!raceStarted && checkpointTndex != 0) || raceFinished) return;
-        
-        if(checkpointTndex == lastCheckpointIndex + 1)
-        {
-            //UpdateCheckpoint();
-        }
-    }
-
-    private void UpdateCheckpoint(int checkpointTndex)
-    {
-        if(checkpointTndex == 0)
-        {
-            if(!raceStarted)
-            {
-                StartRace();
-            }
-            else if (isCircuit && lastCheckpointIndex == checkpoints.Length - 1)
-            {
-                OnLapFinish();
-            }
-        }
-        else if (!isCircuit&& checkpointTndex == checkpoints.Length - 1)
-        {
-            OnLapFinish();
-        }
-        lastCheckpointIndex = checkpointTndex;
-    }
-    #endregion
-
-    #region  Race Management
-
-    private void OnLapFinish()
-    {
-        currentLap++;
-        
-        if(currentLapTime < bestLapTime)
-        {
-            bestLapTime = currentLapTime;
-        }
-
-        if (currentLap > totalLaps)
-        {
-            EndRace();
-        }
-        else
-        {
-            currentLapTime = 0f;
-            lastCheckpointIndex = isCircuit ? 0 : -1;
-
-        }
-
-    }
-    private void StartRace()
-    {
-        raceStarted = true;
-        raceFinished = false;
-    }
-
-    private void EndRace()
-    {
-        raceStarted = false;
-        raceFinished = true;
-    }
-
-    private void UpdateTimers()
-    {
         currentLapTime += Time.deltaTime;
-        overallRaceTime += Time.deltaTime;
+        lapTimeText.text = "Time: " + currentLapTime.ToString("F2");
     }
-    private void UpdaerUI()
+
+    public void PassCheckpoint()
     {
-        currentLapTimeText.text = FormatTime(currentLapTime);
-        overallRaceTimeText.text = FormatTime(overallRaceTime);
-        LapText.text="Lap:"+currentLap+"/"+totalLaps;
-        bestLaptimeText.text = FormatTime(bestLapTime);
+        passedCheckpoints++;
     }
 
-    #endregion
-
-    #region Utility Functions
-    
-    
-    private string FormatTime(float time) 
+private void Start()
     {
-        if(float.IsInfinity(time) || time < 0 ) return "--:--";
-
-        int minutes = (int)time / 60;
-        float seconds = time % 60;
-        return string.Format("{0:00}:{1:00}",minutes,seconds);
+        Time.timeScale = 1f;
+        UpdateLapUI(); 
     }
-    #endregion
+
+
+
+    private void UpdateLapUI()
+    {
+        if (lapText != null)
+        {
+            lapText.text = "Lap: " + currentLap + "/" + totalLaps;
+        }
+    }
+
+    public void CrossFinishLine()
+    {
+        Debug.Log("Hit Finish Line! Checkpoints passed: " + passedCheckpoints);
+
+        if (passedCheckpoints >= totalCheckpoints)
+        {
+            currentLap++;
+            passedCheckpoints = 0;
+
+            UpdateLapUI();
+
+            if (currentLap >= totalLaps)
+            {
+                Debug.Log("Finish Race!");
+                // อาจจะเพิ่ม Time.timeScale = 0; เพื่อหยุดเกม\
+
+                Invoke("ShowResults", 1f); // เรียกฟังก์ชันสรุปผล
+                 return; // หยุดการทำงานอื่นในฟังก์ชันนี้
+            }
+
+            passedCheckpoints = 0;
+            currentLapTime = 0f;
+            
+
+
+        }
+        else 
+        {
+            Debug.Log("ยังผ่าน Checkpoint ไม่ครบ! ขาดอีก: " + (totalCheckpoints - passedCheckpoints));
+        }
+    }
+
+    void ShowResults()
+    {
+   // 1. เปิดหน้าจอสรุปผลขึ้นมาก่อน
+    resultPanel.SetActive(true);
+
+    // 2. คำนวณและสั่งเปลี่ยนตัวหนังสือใน "เฟรมปัจจุบัน" นี้เลย (สำคัญมาก)
+    if (finalTimeText != null)
+    {
+        finalTimeText.text = "Your Time: " + currentLapTime.ToString("F2") + "s";
+    }
+
+    // 3. ค่อยหยุดเวลาเกมเป็นศูนย์
+    Time.timeScale = 0f;
+
+    
+    }
+
+
+
+    
 }
