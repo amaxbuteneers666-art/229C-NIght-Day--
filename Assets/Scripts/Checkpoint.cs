@@ -1,39 +1,19 @@
-using UnityEngine;
+using System.Collections.ObjectModel;
 using System.Collections;
+using UnityEngine;
+using System.Collections.Generic;
 
+
+[RequireComponent(typeof(Collider))]
 public class Checkpoint : MonoBehaviour
 {
-    public float respawnTime = 30f;
-
-    private Collider col;
-    private MeshRenderer mesh;
-
-    private void Start()
-    {
-        col = GetComponent<Collider>();
-        mesh = GetComponent<MeshRenderer>();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
+  public int checkpointTndex;
+  
+  private void  OnTriggerEnter(Collider other) 
+  {
+    if(other.gameObject.CompareTag("Player"))
         {
-            RaceManager.Instance.PassCheckpoint();
-
-            StartCoroutine(Respawn());
+            RaceManager.Instance.CheckpointReached(checkpointTndex);
         }
-    }
-
-    IEnumerator Respawn()
-    {
-        // ซ่อน
-        col.enabled = false;
-        mesh.enabled = false;
-
-        yield return new WaitForSeconds(respawnTime);
-
-        // กลับมา
-        col.enabled = true;
-        mesh.enabled = true;
-    }
+  }
 }
