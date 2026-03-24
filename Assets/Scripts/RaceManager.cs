@@ -83,7 +83,7 @@ private void Start()
             }
 
             passedCheckpoints = 0;
-            currentLapTime = 0f;
+            //currentLapTime = 0f;
             
 
 
