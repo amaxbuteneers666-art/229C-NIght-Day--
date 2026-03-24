@@ -4037,8 +4037,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RaceManager
   resultPanel: {fileID: 619646829}
   finalTimeText: {fileID: 123569958}
-  totalLaps: 1
-  totalCheckpoints: 3
+  totalLaps: 3
+  totalCheckpoints: 2
   lapText: {fileID: 2085221877}
   lapTimeText: {fileID: 1210391499}
 --- !u!4 &2016779297
