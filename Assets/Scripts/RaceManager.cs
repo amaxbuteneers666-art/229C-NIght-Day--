@@ -37,7 +37,8 @@ public class RaceManager : MonoBehaviour
     private void Update()
     {
         currentLapTime += Time.deltaTime;
-        lapTimeText.text = "Time: " + currentLapTime.ToString("F2");
+        //lapTimeText.text = "Time: " + currentLapTime.ToString("F2");
+        lapTimeText.text = ": " + currentLapTime.ToString("F2");
     }
 
     public void PassCheckpoint()
@@ -57,7 +58,7 @@ private void Start()
     {
         if (lapText != null)
         {
-            lapText.text = "Lap: " + currentLap + "/" + totalLaps;
+            lapText.text = ": " + currentLap + "/" + totalLaps;
         }
     }
 
@@ -77,7 +78,7 @@ private void Start()
                 Debug.Log("Finish Race!");
                 // อาจจะเพิ่ม Time.timeScale = 0; เพื่อหยุดเกม\
 
-                Invoke("ShowResults", 1f); // เรียกฟังก์ชันสรุปผล
+                Invoke("ShowResults", 0.5f); // เรียกฟังก์ชันสรุปผล
                  return; // หยุดการทำงานอื่นในฟังก์ชันนี้
             }
 
