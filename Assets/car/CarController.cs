@@ -115,8 +115,7 @@ public class CarController : MonoBehaviour
         }
         steeringInput = Input.GetAxis("Horizontal");
         slipAngle = Vector3.Angle(transform.forward, playerRB.linearVelocity - transform.forward);
-
-        //fixed code to brake even after going on reverse by Andrew Alex 
+ 
         float movingDirection = Vector3.Dot(transform.forward, playerRB.linearVelocity);
         if (gearState != GearState.Changing)
         {
